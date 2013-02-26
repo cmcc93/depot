@@ -16,21 +16,15 @@
 #---
 require 'test_helper'
 
-class ProductsControllerTest < ActionController::TestCase
+class LineItemsControllerTest < ActionController::TestCase
   setup do
-    @product = products(:one)
-    @update = {
-      :title       => 'Lorem Ipsum',
-      :description => 'Wibbles are fun!',
-      :image_url   => 'lorem.jpg',
-      :price       => 19.95
-    }
+    @line_item = line_items(:one)
   end
 
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:products)
+    assert_not_nil assigns(:line_items)
   end
 
   test "should get new" do
@@ -38,38 +32,34 @@ class ProductsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create product" do
-    assert_difference('Product.count') do
-      post :create, :product => @update
+  test "should create line_item" do
+    assert_difference('LineItem.count') do
+      post :create, :product_id => products(:ruby).id
     end
 
-    assert_redirected_to product_path(assigns(:product))
+    assert_redirected_to cart_path(assigns(:line_item).cart)
   end
 
-  # ...
-
-  test "should show product" do
-    get :show, :id => @product.to_param
+  test "should show line_item" do
+    get :show, :id => @line_item.to_param
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, :id => @product.to_param
+    get :edit, :id => @line_item.to_param
     assert_response :success
   end
 
-  test "should update product" do
-    put :update, :id => @product.to_param, :product => @update
-    assert_redirected_to product_path(assigns(:product))
+  test "should update line_item" do
+    put :update, :id => @line_item.to_param, :line_item => @line_item.attributes
+    assert_redirected_to line_item_path(assigns(:line_item))
   end
 
-  # ...
-
-  test "should destroy product" do
-    assert_difference('Product.count', -1) do
-      delete :destroy, :id => @product.to_param
+  test "should destroy line_item" do
+    assert_difference('LineItem.count', -1) do
+      delete :destroy, :id => @line_item.to_param
     end
 
-    assert_redirected_to products_path
+    assert_redirected_to line_items_path
   end
 end
